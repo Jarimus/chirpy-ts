@@ -1,0 +1,23 @@
+{
+  "name": "chirpy-ts",
+  "version": "1.0.0",
+  "description": "A practice repo for a [boot.dev course](https://www.boot.dev/courses/learn-http-servers-typescript) to learn servers with TypeScript.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "node dist/index.js",
+    "dev": "npx tsc && node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.15",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
