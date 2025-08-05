@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { respondWithJSON, respondWithError } from "./utils.js";
+import { respondWithJSON } from "./utils.js";
 
 export async function handlerValidateChirp(req: Request, res: Response) {
   type parameters = {
@@ -9,8 +9,7 @@ export async function handlerValidateChirp(req: Request, res: Response) {
   const params: parameters = req.body;
 
   if (params.body.length > 140) {
-    respondWithError(res, 400, "Chirp is too long");
-    return;
+    throw new Error("Chirp is too long");
   }
 
   let payload = params.body.replaceAll(/kerfuffle|sharbert|fornax/gi, "****")
