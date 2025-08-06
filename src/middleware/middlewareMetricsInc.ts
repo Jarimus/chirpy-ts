@@ -3,6 +3,6 @@ import { config } from "../config.js";
 
 
 export async function middlewareMetricsInc(req: Request, res: Response, next: NextFunction) {
-    config.fileserverHits++;
+    config.api.fileserverHits++;
     next();
 }

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { config } from "../config.js";
 
 export async function handlerReset(req: Request, res: Response): Promise<void> {
-    config.fileserverHits = 0;
+    config.api.fileserverHits = 0;
     res.set('Content-Type', 'text/html; charset=utf-8');
     res.send(`<html>
   <body>
