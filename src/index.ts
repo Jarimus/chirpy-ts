@@ -1,4 +1,8 @@
 import express from "express";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+
 import { handlerReadiness } from "./handlers/handlerReadiness.js";
 import { middlewareLogResponses } from "./middleware/middlewareLogResponses.js";
 import { middlewareMetricsInc } from "./middleware/middlewareMetricsInc.js";
@@ -6,12 +10,18 @@ import { handlerMetrics } from "./handlers/handlerMetrics.js";
 import { handlerReset } from "./handlers/handlerReset.js";
 import { handlerValidateChirp } from "./handlers/handlerValidateChirp.js";
 import { errorHandler } from "./middleware/errorHandler.js";
+import { handlerNewUser } from "./handlers/handlerNewUser.js";
+
+import { config } from "./config.js";
+
+const migrationClient = postgres(config.db.url, { max: 1 });
+await migrate(drizzle(migrationClient), config.db.migConfig);
 
 const app = express();
-const PORT = 8080;
 
 app.use(express.json());
 app.use(middlewareLogResponses);
+
 app.use("/app", middlewareMetricsInc, express.static("./src/app"));
 
 app.get("/api/healthz", async (req, res, next) => {
@@ -21,6 +31,7 @@ app.get("/api/healthz", async (req, res, next) => {
     next(err);
   }
 });
+
 app.get("/admin/metrics", async (req, res, next) => {
   try {
     await handlerMetrics(req, res);
@@ -28,6 +39,7 @@ app.get("/admin/metrics", async (req, res, next) => {
     next(err);
   }
 });
+
 app.post("/admin/reset", async (req, res, next) => {
   try {
     await handlerReset(req, res);
@@ -35,6 +47,7 @@ app.post("/admin/reset", async (req, res, next) => {
     next(err);
   }
 });
+
 app.post("/api/validate_chirp", async (req, res, next) => {
   try {
     await handlerValidateChirp(req, res);
@@ -43,8 +56,17 @@ app.post("/api/validate_chirp", async (req, res, next) => {
   }
 });
 
+app.post("/api/users", async (req, res, next) => {
+  try {
+    await handlerNewUser(req, res);
+  } catch (err) {
+    next(err);
+  }
+})
+
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+const port = config.api.port
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
 });
