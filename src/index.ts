@@ -8,9 +8,9 @@ import { middlewareLogResponses } from "./middleware/middlewareLogResponses.js";
 import { middlewareMetricsInc } from "./middleware/middlewareMetricsInc.js";
 import { handlerMetrics } from "./handlers/handlerMetrics.js";
 import { handlerReset } from "./handlers/handlerReset.js";
-import { handlerValidateChirp } from "./handlers/handlerValidateChirp.js";
+import { handlerCreateChirp } from "./handlers/handlerCreateChirp.js";
 import { errorHandler } from "./middleware/errorHandler.js";
-import { handlerNewUser } from "./handlers/handlerNewUser.js";
+import { handlerCreateUser } from "./handlers/handlerCreateUser.js";
 
 import { config } from "./config.js";
 
@@ -48,9 +48,9 @@ app.post("/admin/reset", async (req, res, next) => {
   }
 });
 
-app.post("/api/validate_chirp", async (req, res, next) => {
+app.post("/api/chirps", async (req, res, next) => {
   try {
-    await handlerValidateChirp(req, res);
+    await handlerCreateChirp(req, res);
   } catch (err) {
     next(err);
   }
@@ -58,7 +58,7 @@ app.post("/api/validate_chirp", async (req, res, next) => {
 
 app.post("/api/users", async (req, res, next) => {
   try {
-    await handlerNewUser(req, res);
+    await handlerCreateUser(req, res);
   } catch (err) {
     next(err);
   }

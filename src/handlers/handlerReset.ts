@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { config } from "../config.js";
 import { deleteUsers } from "../db/queries/users.js";
+import { ForbiddenError } from "../middleware/errorHandler.js";
 
 export async function handlerReset(req: Request, res: Response): Promise<void> {
 
   if (config.api.platform != "dev") {
-    res.status(403).send("403: Forbidden");
-    res.end();
-    return
+    console.log(config.api.platform);
+    throw new ForbiddenError("Reset only allowed in dev environment");
   }
 
   // Reset server hit count  

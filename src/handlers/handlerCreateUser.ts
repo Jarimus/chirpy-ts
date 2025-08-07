@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { createUser } from "../db/queries/users.js";
 import { BadRequestError } from "../middleware/errorHandler.js";
+import { respondWithJSON } from "./utils.js";
 
-export async function handlerNewUser(req:Request, res: Response) {
+export async function handlerCreateUser(req:Request, res: Response) {
     type parameters = {
         email: string
     };
@@ -19,9 +20,7 @@ export async function handlerNewUser(req:Request, res: Response) {
             email: email
         });
 
-        const resBody = JSON.stringify(newUser);
-        res.status(201).send(resBody);
-        res.end();
+        respondWithJSON(res, 201, newUser)
 
     } catch (err) {
         throw new Error("Error creating a new user.")

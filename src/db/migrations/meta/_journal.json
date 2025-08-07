@@ -8,6 +8,13 @@
       "when": 1754554398702,
       "tag": "0000_smiling_scalphunter",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1754555995272,
+      "tag": "0001_steep_dust",
+      "breakpoints": true
     }
   ]
 }
