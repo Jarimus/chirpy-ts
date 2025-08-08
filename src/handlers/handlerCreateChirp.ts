@@ -26,7 +26,5 @@ export async function handlerCreateChirp(req: Request, res: Response) {
     userId: params.userId
   })
 
-  respondWithJSON(res, 201, {
-    cleanedBody: chirp,
-  });
+  respondWithJSON(res, 201, chirp);
 }
