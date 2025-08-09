@@ -15,6 +15,13 @@
       "when": 1754555995272,
       "tag": "0001_steep_dust",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1754741131219,
+      "tag": "0002_third_phalanx",
+      "breakpoints": true
     }
   ]
 }
