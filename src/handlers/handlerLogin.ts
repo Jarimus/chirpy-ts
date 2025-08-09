@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { checkPassword } from "../auth.js";
+import { checkPassword } from "../auth/password.js";
 import { getUserByEmail } from "../db/queries/users.js";
 import { BadRequestError, UnauthorizedError } from "../middleware/errorHandler.js";
 import { respondWithJSON } from "./utils.js";

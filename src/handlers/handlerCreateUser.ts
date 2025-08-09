@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { createUser } from "../db/queries/users.js";
 import { BadRequestError } from "../middleware/errorHandler.js";
 import { respondWithJSON } from "./utils.js";
-import { hashPassword } from "../auth.js";
+import { hashPassword } from "../auth/password.js";
 
 export async function handlerCreateUser(req:Request, res: Response) {
     type parameters = {

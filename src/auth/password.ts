@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import { hash } from 'crypto';
 
 export async function hashPassword(password: string): Promise<string> {
   const saltRounds = 10; // You can adjust the salt rounds for security vs performance trade-off
