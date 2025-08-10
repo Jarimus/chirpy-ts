@@ -9,6 +9,7 @@ export type APIConfig = {
   fileserverHits: number;
   port: number
   platform: string;
+  secret: string
 }
 
 export type Config = {
@@ -38,7 +39,8 @@ const dbConfig = {
 const apiConfig: APIConfig = {
   fileserverHits: 0,
   port: Number(envOrThrow("PORT")),
-  platform: envOrThrow("PLATFORM")
+  platform: envOrThrow("PLATFORM"),
+  secret: envOrThrow("SECRET")
 }
 
 export const config: Config = {

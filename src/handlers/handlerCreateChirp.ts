@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import { respondWithJSON } from "./utils.js";
-import { BadRequestError } from "../middleware/errorHandler.js";
+import { BadRequestError, UnauthorizedError } from "../middleware/errorHandler.js";
 import { createChirp } from "../db/queries/chirps.js";
+import { getBearerToken, validateJWT } from "../auth/jwt.js";
+import { config } from "../config.js";
 
 export async function handlerCreateChirp(req: Request, res: Response) {
   type parameters = {
     body: string;
-    userId: string;
   };
 
   const params: parameters = req.body;
@@ -15,15 +16,19 @@ export async function handlerCreateChirp(req: Request, res: Response) {
     throw new BadRequestError("Chirp is too long. Max length is 140")
   }
 
-  if (params.userId === undefined) {
-    throw new BadRequestError("userId undefined");
+  // Check JWTtoken
+  const token = await getBearerToken(req);
+  const userID = await validateJWT(token, config.api.secret)
+
+  if (userID === undefined) {
+    throw new UnauthorizedError("invalid token");
   }
 
   let payload = params.body.replaceAll(/kerfuffle|sharbert|fornax/gi, "****")
 
   const chirp = await createChirp({
     body: payload,
-    userId: params.userId
+    userId: userID
   })
 
   respondWithJSON(res, 201, chirp);
