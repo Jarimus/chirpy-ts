@@ -37,7 +37,7 @@ export function errorHandler(
     next: NextFunction
 ) {
     const msg = err.message
-    console.log(msg)
+    console.log(`[NON-OK] Error: ${msg}`)
 
     // Find the correct error code based on the error class
     if (err instanceof BadRequestError) {

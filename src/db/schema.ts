@@ -37,3 +37,5 @@ export const refreshTokens = pgTable("refresh_tokens", {
   expiresAt: timestamp("expires_at").notNull(),
   revokedAt: timestamp("revoked_at")
 })
+
+export type NewRefreshToken = typeof refreshTokens.$inferInsert;

@@ -23,3 +23,14 @@ export async function deleteUsers() {
   const [result] = await db
   .delete(users)
 }
+
+export async function updateUserPasswordEmail(userID: string, hashedPassword:string, email:string) {
+  const [result] = await db
+  .update(users)
+  .set({
+    email: email,
+    hashedPassword: hashedPassword
+  })
+  .returning();
+  return result;
+}

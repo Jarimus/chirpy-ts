@@ -33,13 +33,13 @@ describe("JWT token creation and validation", () => {
     const secret = "sEcReTsTrInG";
 
     it("should create and validate a valid JWT token", async () => {
-        const jwtString = await makeJWT(userID, expiresIn, secret);
+        const jwtString = await makeJWT(userID, secret);
         const decodedUserID = await validateJWT(jwtString, secret);
         expect(decodedUserID).toBe(userID);
     })
 
     it("should create a JWT token, but validation should fail because of expiration", async () => {
-        const jwtString = await makeJWT(userID, expiresIn, secret);
+        const jwtString = await makeJWT(userID, secret);
         await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for token to expire
         await expect(validateJWT(jwtString, secret)).rejects.toThrow("jwt expired");
     })
