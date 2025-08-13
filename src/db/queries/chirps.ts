@@ -22,6 +22,18 @@ export async function getChirps() {
   return result
 }
 
+export async function getChirpsByUserId(userId: string) {
+  const result = await db
+  .query
+  .chirps
+  .findMany({
+    where: eq(chirps.userId, userId),
+    orderBy: [asc(chirps.createdAt)]
+  });
+
+  return result
+}
+
 export async function getOneChirp(chirpID:string) {
   const [result] = await db
   .select()
