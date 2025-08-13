@@ -40,7 +40,7 @@ export async function validateJWT(tokenString:string, secret:string) {
 export async function getBearerToken(req:Request) {
     const authHeader = req.get('Authorization');
     const parts = authHeader?.split(' ');
-    if (parts === undefined || parts.length < 1) {
+    if (parts === undefined || parts.length < 2) {
         throw new UnauthorizedError("bad header: 'Authorization'")
     }
     const tokenString = parts[1].trim();
