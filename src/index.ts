@@ -20,6 +20,7 @@ import { handlerRefresh } from "./handlers/handlerRefresh.js";
 import { handlerRevoke } from "./handlers/handlerRevoke.js";
 import { handlerUpdateUser } from "./handlers/handlerUpdateUser.js";
 import { handlerDeleteChirp } from "./handlers/handlerDeleteChirp.js";
+import { handlerWebhooks } from "./handlers/handlerWebhooks.js";
 
 const migrationClient = postgres(config.db.url, { max: 1 });
 await migrate(drizzle(migrationClient), config.db.migConfig);
@@ -122,6 +123,14 @@ app.post("/api/refresh", async (req, res, next) => {
 app.post("/api/revoke", async (req, res, next) => {
   try {
     await handlerRevoke(req, res);
+  } catch (err) {
+    next(err);
+  }
+})
+
+app.post("/api/polka/webhooks", async (req, res, next) => {
+  try {
+    await handlerWebhooks(req, res);
   } catch (err) {
     next(err);
   }

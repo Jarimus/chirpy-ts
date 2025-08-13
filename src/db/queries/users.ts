@@ -31,6 +31,18 @@ export async function updateUserPasswordEmail(userID: string, hashedPassword:str
     email: email,
     hashedPassword: hashedPassword
   })
+  .where(eq(users.id, userID))
+  .returning();
+  return result;
+}
+
+export async function updateChirpyRed(userID:string, newValue: boolean) {
+  const [result] = await db
+  .update(users)
+  .set({
+    isChirpyRed: newValue
+  })
+  .where(eq(users.id, userID))
   .returning();
   return result;
 }

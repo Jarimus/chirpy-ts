@@ -54,5 +54,6 @@ export async function handlerLogin(req:Request, res: Response) {
         email: dbUser.email,
         token: jwtToken,
         refreshToken: dbRefreshToken.token,
+        isChirpyRed: dbUser.isChirpyRed
     })
 }

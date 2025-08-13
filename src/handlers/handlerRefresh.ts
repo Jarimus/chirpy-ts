@@ -7,15 +7,20 @@ import { config } from "../config.js";
 
 export async function handlerRefresh(req: Request, res:Response) {
     const refreshTokenString = await getBearerToken(req);
+
     const refreshToken = await getRefreshToken(refreshTokenString);
+
     if (refreshToken === undefined || refreshToken.revokedAt != null) {
         throw new UnauthorizedError("Token invalid");
     }
+
     if (refreshToken.expiresAt.getTime() < Date.now()) {
         throw new UnauthorizedError("Token expired")
     }
-    const jwtToken = await makeJWT(refreshToken.userId, config.api.secret)
+    
+    const jwtToken = await makeJWT(refreshToken.userId, config.api.secret);
+
     respondWithJSON(res, 200, {
         token: jwtToken
-    })
+    });
 }

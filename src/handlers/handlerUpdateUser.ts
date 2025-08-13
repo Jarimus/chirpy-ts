@@ -28,5 +28,6 @@ export async function handlerUpdateUser(req:Request, res: Response) {
         createdAt: dbUser.createdAt,
         updatedAt: dbUser.updatedAt,
         email: dbUser.email,
+        isChirpyRed: dbUser.isChirpyRed
     })
 }
