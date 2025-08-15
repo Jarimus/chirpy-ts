@@ -18,7 +18,7 @@ export async function handlerDeleteChirp(req:Request, res: Response) {
         throw new ForbiddenError("userID mismatch");
     }
 
-    deleteChirp(chirpID);
+    await deleteChirp(chirpID);
 
     res.status(204);
     res.end();
